@@ -2,7 +2,7 @@ import 'package:chat_app/Datas/ProfileDataModel.dart';
 import 'package:chat_app/Pages/ChatPage.dart';
 import 'package:flutter/material.dart';
 class Individualchat extends StatefulWidget {
-  const Individualchat({super.key,required this.chats});
+   Individualchat({super.key,required this.chats});
   final ProfileDataModel chats;
 
   @override
@@ -12,8 +12,23 @@ class Individualchat extends StatefulWidget {
 
 class _IndividualchatState extends State<Individualchat> {
     @override
+    late TextEditingController mycontroller;
+
+    @override
+    void initState() {
+      super.initState();
+      mycontroller = TextEditingController();
+    }
+
+    @override
+    void dispose() {
+      mycontroller.dispose();
+      super.dispose();
+    }
+
     Widget build(BuildContext context) {
         return Scaffold(
+          backgroundColor: Colors.white,
             appBar: AppBar(
                 leadingWidth: 70,
                     leading:Row(
@@ -57,8 +72,48 @@ class _IndividualchatState extends State<Individualchat> {
             ],
             backgroundColor: Color(0xFF049347),
             ),
-            body:Container() ,
-          bottomNavigationBar:BottomNavigationBar(items: ) ,
+            body:Container(
+              height:MediaQuery.of(context).size.height,
+              width:MediaQuery.of(context).size.width,
+              child: Stack(children: [
+                ListView(),
+                Align(
+                  alignment: Alignment.bottomCenter,
+
+                  child: Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width-60,
+
+                        child: Card(
+                          margin:EdgeInsets.all(15),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+                          child: TextFormField(
+                            controller:mycontroller,
+                            maxLines:5,
+                            minLines: 1,
+                            textAlignVertical: TextAlignVertical.center,
+                            decoration:InputDecoration(
+                              border: InputBorder.none,
+                              prefixIcon: IconButton(onPressed: (){}, icon: Icon(Icons.emoji_emotions,color: Colors.green,)),
+                              hintText: "Type your Message",
+                              suffixIcon: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(onPressed: (){print(mycontroller.text);}, icon:Icon(Icons.camera_alt)),
+                                  IconButton(onPressed:(){}, icon:Icon(Icons.attach_file))],
+                              ),
+                            )
+                          ),
+                        ),
+
+                      ),
+                 CircleAvatar(child:Icon(Icons.mic,color: Colors.white,),radius: 27,backgroundColor: Colors.green,)  ],
+                  ),
+                ),
+              ],),
+            ) ,
 
         );
     }
