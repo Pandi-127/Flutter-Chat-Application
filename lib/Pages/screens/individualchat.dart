@@ -1,30 +1,26 @@
 import 'package:chat_app/Datas/ProfileDataModel.dart';
-import 'package:chat_app/Pages/ChatPage.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 class Individualchat extends StatefulWidget {
    Individualchat({super.key,required this.chats});
   final ProfileDataModel chats;
-
-  @override
   State<Individualchat> createState() => _IndividualchatState();
-
 }
 
 class _IndividualchatState extends State<Individualchat> {
-    @override
-    late TextEditingController mycontroller;
+   TextEditingController mycontroller = TextEditingController();
+   bool clickedemojiIcon = false;
+   FocusNode myfocusNode = FocusNode();
+   @override
+   void initState(){
+     super.initState();
+     myfocusNode.addListener((){
+       if(myfocusNode.hasFocus){
+         clickedemojiIcon = false;
+       }
+     });
+   }
 
-    @override
-    void initState() {
-      super.initState();
-      mycontroller = TextEditingController();
-    }
-
-    @override
-    void dispose() {
-      mycontroller.dispose();
-      super.dispose();
-    }
 
     Widget build(BuildContext context) {
         return Scaffold(
@@ -75,46 +71,83 @@ class _IndividualchatState extends State<Individualchat> {
             body:Container(
               height:MediaQuery.of(context).size.height,
               width:MediaQuery.of(context).size.width,
-              child: Stack(children: [
-                ListView(),
-                Align(
-                  alignment: Alignment.bottomCenter,
+              child: WillPopScope(
+                onWillPop: (){
+                  if(clickedemojiIcon){
+                     setState(() {
+                       clickedemojiIcon = false;
+                     });
+                  }else{
+                    Navigator.pop(context);
+                  }
+                  return Future.value(false);
+                },
+                child: Stack(children: [
+                  ListView(),
+                  Align(
+                    alignment: Alignment.bottomCenter,
 
-                  child: Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width-60,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width-60,
 
-                        child: Card(
-                          margin:EdgeInsets.all(15),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
-                          child: TextFormField(
-                            controller:mycontroller,
-                            maxLines:5,
-                            minLines: 1,
-                            textAlignVertical: TextAlignVertical.center,
-                            decoration:InputDecoration(
-                              border: InputBorder.none,
-                              prefixIcon: IconButton(onPressed: (){}, icon: Icon(Icons.emoji_emotions,color: Colors.green,)),
-                              hintText: "Type your Message",
-                              suffixIcon: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(onPressed: (){print(mycontroller.text);}, icon:Icon(Icons.camera_alt)),
-                                  IconButton(onPressed:(){}, icon:Icon(Icons.attach_file))],
+                              child: Card(
+                                margin:EdgeInsets.all(15),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+                                child: TextFormField(
+                                  focusNode: myfocusNode,
+                                  controller:mycontroller,
+                                  maxLines:5,
+                                  minLines: 1,
+                                  textAlignVertical: TextAlignVertical.center,
+                                  decoration:InputDecoration(
+                                    border: InputBorder.none,
+                                    prefixIcon: IconButton(
+                                        onPressed: (){setState(() {
+                                          myfocusNode.unfocus();
+                                          myfocusNode.canRequestFocus=false;
+                                          clickedemojiIcon = !clickedemojiIcon;
+                                        });},
+                                        icon: Icon(Icons.emoji_emotions,color: Colors.green,)),
+                                    hintText: "Type your Message",
+                                    suffixIcon: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        IconButton(onPressed: (){print(mycontroller.text);}, icon:Icon(Icons.camera_alt)),
+                                        IconButton(onPressed:(){}, icon:Icon(Icons.attach_file))],
+                                    ),
+                                  )
+                                ),
                               ),
-                            )
-                          ),
-                        ),
 
-                      ),
-                 CircleAvatar(child:Icon(Icons.mic,color: Colors.white,),radius: 27,backgroundColor: Colors.green,)  ],
+                            ),
+                                         CircleAvatar(child:Icon(Icons.mic,color: Colors.white,),radius: 27,backgroundColor: Colors.green,)  ],
+                        ),
+                        clickedemojiIcon?emojipad():Container(),
+                      ],
+                    ),
                   ),
-                ),
-              ],),
+                ],),
+              ),
             ) ,
 
         );
     }
+
+
+  Widget emojipad(){
+    return EmojiPicker(
+      onEmojiSelected:(Category,emoji){
+        setState(() {
+          mycontroller.text = mycontroller.text+emoji.emoji;
+        });
+
+      },
+    );
+  }
 }
