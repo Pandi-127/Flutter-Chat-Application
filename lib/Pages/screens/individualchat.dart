@@ -119,7 +119,13 @@ class _IndividualchatState extends State<Individualchat> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         IconButton(onPressed: (){print(mycontroller.text);}, icon:Icon(Icons.camera_alt)),
-                                        IconButton(onPressed:(){}, icon:Icon(Icons.attach_file))],
+                                        IconButton(
+                                            onPressed:(){
+                                              showModalBottomSheet(
+                                                  backgroundColor:Colors.transparent,
+                                                  context: context, builder: (builder)=>BottemSheetcustome());
+                                            },
+                                            icon:Icon(Icons.attach_file))],
                                     ),
                                   )
                                 ),
@@ -138,16 +144,68 @@ class _IndividualchatState extends State<Individualchat> {
 
         );
     }
+    Widget BottemSheetcustome(){
+     return Container(
+       height: 265,
+       width:MediaQuery.of(context).size.width,
+       child:Card(
+         margin:EdgeInsets.all(18),
+         child: Padding(
+           padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+           child: Column(
+             children: [
+               Row(
+                 mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 iconcreater(Icons.insert_drive_file, Colors.indigo, "Documents"),
+                 SizedBox(width:40,),
+                 iconcreater(Icons.camera_alt, Colors.purple, "Camera"),
+                 SizedBox(width:40,),
+                 iconcreater(Icons.insert_photo, Colors.pinkAccent, "Photo")
+               ],
 
+             ),
+           SizedBox(height: 27,),
+           Row(
+             mainAxisAlignment: MainAxisAlignment.center,
+             children: [
+               iconcreater(Icons.audiotrack, Colors.orangeAccent, "Audio"),
+               SizedBox(width:40,),
+               iconcreater(Icons.location_on_rounded, Colors.teal, "Location"),
+               SizedBox(width:40,),
+               iconcreater(Icons.person, Colors.blue, "Conduct")
+             ]
+           )],
+           ),
+         ),
+       ) ,
+     );
+    }
 
-  Widget emojipad(){
-    return EmojiPicker(
-      onEmojiSelected:(Category,emoji){
-        setState(() {
-          mycontroller.text = mycontroller.text+emoji.emoji;
-        });
+    Widget iconcreater(IconData myicon,Color mycolor,String mystring){
+     return Column(
+       children: [
+         InkWell(
+           onTap: (){},
+           child: CircleAvatar(
+             backgroundColor:mycolor,
+             radius: 27,
+             child:Icon(myicon,color: Colors.white,),
+           ),
+         ),
+         Text(mystring,style: TextStyle(fontSize:11.5 ),)
+       ],
+     );
+    }
 
-      },
-    );
-  }
+    Widget emojipad(){
+      return EmojiPicker(
+        onEmojiSelected:(Category,emoji){
+          setState(() {
+            mycontroller.text = mycontroller.text+emoji.emoji;
+          });
+
+        },
+      );
+    }
 }
