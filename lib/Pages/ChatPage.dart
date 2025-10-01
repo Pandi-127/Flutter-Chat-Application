@@ -1,5 +1,6 @@
 import 'package:chat_app/CustomeUi/CustomeCard.dart';
 import 'package:chat_app/Datas/ProfileDataModel.dart';
+import 'package:chat_app/Pages/screens/AddContact.dart';
 import 'package:flutter/material.dart';
 class Chatpage extends StatefulWidget {
    Chatpage({super.key});
@@ -8,8 +9,8 @@ class Chatpage extends StatefulWidget {
 
 }
 List<ProfileDataModel> chats =[
-  ProfileDataModel(Name: "NanDan", iconModel: Icons.person_2, isGroup:false, lastMessage: "hello", time:"4:19"),
-  ProfileDataModel(Name: "Avan", iconModel:Icons.person_2 , isGroup: true, lastMessage: "lastMessage", time: "time")
+  ProfileDataModel(Name: "NanDan", iconModel: Icons.person_2, isGroup:false, lastMessage: "hello", time:"4:19",isnewconduct: false,Status: "jhsdf"),
+  ProfileDataModel(Name: "Avan", iconModel:Icons.person_2 , isGroup: true, lastMessage: "lastMessage", time: "time",isnewconduct: false,Status: "dbsf")
 ];
 
 class _ChatpageState extends State<Chatpage> {
@@ -18,7 +19,9 @@ class _ChatpageState extends State<Chatpage> {
     return Scaffold(
       backgroundColor: Color(0xFFFBFBFB),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(context,MaterialPageRoute(builder: (build)=>AddContact()));
+        },
         backgroundColor:Color(0xFF049347),
         child: Icon(Icons.message),
       ),
