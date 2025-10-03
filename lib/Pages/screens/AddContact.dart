@@ -1,5 +1,6 @@
 import 'package:chat_app/CustomeUi/CustomeCard.dart';
 import 'package:chat_app/Datas/ProfileDataModel.dart';
+import 'package:chat_app/Pages/screens/NewGroup.dart';
 import 'package:flutter/material.dart';
 
 class AddContact extends StatefulWidget {
@@ -16,7 +17,7 @@ List<ProfileDataModel> availableContacts = [
       isGroup: false,
       lastMessage: "hey! there iam in WhatApp",
       time: "12:3",
-      isnewconduct: true,
+      isnewconduct: false,
       Status: "hey! there iam in WhatApp"),
   ProfileDataModel(
       Name: "+915651565465",
@@ -41,7 +42,7 @@ List<ProfileDataModel> availableContacts = [
       lastMessage: "hey! there iam in WhatApp",
       time: "12:3",
       Status: "hey! there iam in WhatApp",
-      isnewconduct: true),
+      isnewconduct: false),
   ProfileDataModel(
       Name: "kumar",
       iconModel: Icons.person,
@@ -128,18 +129,23 @@ class _AddContactState extends State<AddContact> {
       body: ListView(
         children: [
           // New Group
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: CircleAvatar(
-                child: Icon(
-                  Icons.group_add,
-                  color: Colors.white,
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (build)=>CreateGroup()));
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListTile(
+                leading: CircleAvatar(
+                  child: Icon(
+                    Icons.group_add,
+                    color: Colors.white,
+                  ),
+                  backgroundColor: Colors.green,
                 ),
-                backgroundColor: Colors.green,
+                title: Text("New Group",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
               ),
-              title: Text("New Group",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
             ),
           ),
 
