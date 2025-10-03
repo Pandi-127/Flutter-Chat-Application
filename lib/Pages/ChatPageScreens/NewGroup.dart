@@ -1,7 +1,7 @@
 import 'package:chat_app/Datas/ProfileDataModel.dart';
 import 'package:flutter/material.dart';
 
-class CreateGroup extends StatefulWidget {  
+class CreateGroup extends StatefulWidget {
   const CreateGroup({super.key});
 
   @override
@@ -15,7 +15,7 @@ List<ProfileDataModel> availableContacts = [
       isGroup: false,
       lastMessage: "hey! there iam in WhatApp",
       time: "12:3",
-      isnewconduct: true,  
+      isnewconduct: true,
       Status: "hey! there iam in WhatApp"),
   ProfileDataModel(
       Name: "+915651565465",
@@ -92,31 +92,37 @@ List<ProfileDataModel> availableContacts = [
 ];
 
 class _CreateGroupState extends State<CreateGroup> {
-  List<ProfileDataModel> selectedContacts = [];  
+  List<ProfileDataModel> selectedContacts = [];
 
   @override
   Widget build(BuildContext context) {
     final existingContacts = availableContacts.where((c) => !c.isnewconduct).toList();
     final newContacts = availableContacts.where((c) => c.isnewconduct).toList();
-    
+
     List<Widget> selectedAvatars = [
       Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: CircleAvatar(
-          radius: 20,
-          child: Icon(Icons.person_add_alt_rounded),
+          padding: const EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            radius: 20,
+            child: Icon(Icons.person_add_alt_rounded),
+          ),
         ),
-      ),
+
     ];
     if(selectedContacts.isNotEmpty){
     selectedAvatars.removeAt(0);
     }
     selectedAvatars.addAll(
-      selectedContacts.map((contact) => Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: CircleAvatar(
-          radius: 20,
-          child:Icon(contact.iconModel),
+      selectedContacts.map((contact) => InkWell(
+        onTap: (){setState(() {
+          selectedContacts.remove(contact);
+        });},
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: CircleAvatar(
+            radius: 20,
+            child:Icon(contact.iconModel),
+          ),
         ),
       )),
     );
@@ -172,34 +178,44 @@ class _CreateGroupState extends State<CreateGroup> {
           ),
 
           ...existingContacts.map(
-                  (c){ return ListTile(
-            leading: CircleAvatar(child: Icon(c.iconModel)),
-            title: Text(
-              c.Name,
-              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-            ),
-            subtitle: Text(
-              c.Status,
-              style: const TextStyle(fontSize: 13),
-            ),
-            trailing: Checkbox(
-              shape:CircleBorder() ,
-              value: selectedContacts.contains(c),
-              onChanged: (bool? newValue) {
-                setState(() {
-                  if (newValue == true) {
-                    if (!selectedContacts.contains(c)) {
-                      selectedContacts.add(c);
+                  (c){ return InkWell(
+                    onTap: (){setState(() {
+                      if(selectedContacts.contains(c)){
+                        selectedContacts.remove(c);
+                      }else{
+                        selectedContacts.add(c);
+                      }
+                    });},
+
+                    child: ListTile(
+                                leading: CircleAvatar(child: Icon(c.iconModel)),
+                                title: Text(
+                                  c.Name,
+                                  style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                                ),
+                                subtitle: Text(
+                                  c.Status,
+                                  style: const TextStyle(fontSize: 13),
+                                ),
+                                trailing: Checkbox(
+                                  shape:CircleBorder() ,
+                                  value: selectedContacts.contains(c),
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                    if (newValue == true) {
+                      if (!selectedContacts.contains(c)) {
+                        selectedContacts.add(c);
+                      }
+                    } else {
+                      selectedContacts.remove(c);
                     }
-                  } else {
-                    selectedContacts.remove(c);
-                  }
-                });
-              },
-              activeColor: Colors.green,
-              checkColor: Colors.white,
-            ),
-          );}),
+                                    });
+                                  },
+                                  activeColor: Colors.green,
+                                  checkColor: Colors.white,
+                                ),
+                              ),
+                  );}),
 
           // New Contacts Section
           const Padding(

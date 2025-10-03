@@ -1,6 +1,6 @@
 import 'package:chat_app/CustomeUi/CustomeCard.dart';
 import 'package:chat_app/Datas/ProfileDataModel.dart';
-import 'package:chat_app/Pages/screens/NewGroup.dart';
+import 'package:chat_app/Pages/ChatPageScreens/NewGroup.dart';
 import 'package:flutter/material.dart';
 
 class AddContact extends StatefulWidget {

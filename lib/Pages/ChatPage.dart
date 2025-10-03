@@ -1,6 +1,6 @@
 import 'package:chat_app/CustomeUi/CustomeCard.dart';
 import 'package:chat_app/Datas/ProfileDataModel.dart';
-import 'package:chat_app/Pages/screens/AddContact.dart';
+import 'package:chat_app/Pages/ChatPageScreens/AddContact.dart';
 import 'package:flutter/material.dart';
 class Chatpage extends StatefulWidget {
    Chatpage({super.key});

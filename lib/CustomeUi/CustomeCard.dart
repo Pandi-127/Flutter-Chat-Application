@@ -1,6 +1,6 @@
 import 'package:chat_app/Datas/ProfileDataModel.dart';
 import 'package:chat_app/Pages/ChatPage.dart';
-import 'package:chat_app/Pages/screens/individualchat.dart';
+import 'package:chat_app/Pages/ChatPageScreens/individualchat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 class CustomeProfileCard extends StatelessWidget {
