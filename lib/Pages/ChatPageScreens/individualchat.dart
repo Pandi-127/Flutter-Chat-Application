@@ -1,4 +1,6 @@
 import 'package:chat_app/Datas/ProfileDataModel.dart';
+import 'package:chat_app/Pages/CameraPage.dart';
+import 'package:chat_app/Pages/CameraPageSCreens/CameraScreen.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -154,7 +156,7 @@ class _IndividualChatState extends State<IndividualChat> {
                                   children: [
                                     IconButton(
                                       onPressed: () {
-                                        print(myController.text);
+                                        Navigator.push(context, MaterialPageRoute(builder: (build)=>CameraPage()));
                                       },
                                       icon: Icon(Icons.camera_alt),
                                     ),
@@ -202,17 +204,25 @@ class _IndividualChatState extends State<IndividualChat> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
             children: [
+              //First Row of Elements in Attach File Icon
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   iconCreator(Icons.insert_drive_file, Colors.indigo, "Documents"),
                   SizedBox(width: 40),
-                  iconCreator(Icons.camera_alt, Colors.purple, "Camera"),
+                  InkWell(
+                      onTap:()
+                      {
+                        Navigator.push(context, MaterialPageRoute(builder: (build) => CameraScreen()));
+                      },
+                      child: iconCreator(Icons.camera_alt, Colors.purple, "Camera")),
                   SizedBox(width: 40),
                   iconCreator(Icons.insert_photo, Colors.pinkAccent, "Photo"),
                 ],
               ),
               SizedBox(height: 27),
+
+              //Secound Row Of Elements in Attach File Icon
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

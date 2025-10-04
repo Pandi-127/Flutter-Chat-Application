@@ -103,10 +103,12 @@ class _CreateGroupState extends State<CreateGroup> {
       Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            radius: 20,
-            child: Icon(Icons.person_add_alt_rounded),
+            backgroundColor: Colors.green,
+              radius: 20,
+              child: Icon(Icons.person_add_alt_rounded,color: Colors.white
+                ,),
+            ),
           ),
-        ),
 
     ];
     if(selectedContacts.isNotEmpty){
@@ -118,10 +120,17 @@ class _CreateGroupState extends State<CreateGroup> {
           selectedContacts.remove(contact);
         });},
         child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: CircleAvatar(
-            radius: 20,
-            child:Icon(contact.iconModel),
+          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+          child: Stack(
+            children: [ CircleAvatar(
+              backgroundColor: Colors.green,
+              radius: 20,
+              child:Icon(contact.iconModel,color: Colors.white,),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 23,vertical: 22),
+              child: Icon(Icons.cancel,color: Color(0xFF635C5C),),
+            )],
           ),
         ),
       )),
@@ -133,7 +142,7 @@ class _CreateGroupState extends State<CreateGroup> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Add Contact",
+              "Add Members",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
             Text(
@@ -188,7 +197,9 @@ class _CreateGroupState extends State<CreateGroup> {
                     });},
 
                     child: ListTile(
-                                leading: CircleAvatar(child: Icon(c.iconModel)),
+                                leading: CircleAvatar(
+                                  backgroundColor: Colors.green,
+                                    child: Icon(c.iconModel,color: Colors.white,)),
                                 title: Text(
                                   c.Name,
                                   style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
@@ -226,25 +237,39 @@ class _CreateGroupState extends State<CreateGroup> {
             ),
           ),
           ...newContacts.map(
-                (c) => ListTile(
-              leading: CircleAvatar(child: Icon(c.iconModel)),
-              title: Text(c.Name),
-              subtitle: Text(c.Status ?? ""),
-              trailing: TextButton(
-                onPressed: () {
-                  print("Invite sent to ${c.Name}");
+                (c) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                                leading: CircleAvatar(
+                  backgroundColor: Colors.green,
+                    child: Icon(c.iconModel,color: Colors.white,)),
+                                title: Text(c.Name),
+                               // subtitle: Text(c.Status ?? ""),
+                                trailing: TextButton(
+                  onPressed: () {
+                    print("Invite sent to ${c.Name}");
 
-                  // TODO: Implement actual invite logic
-                },
-                child: const Text(
-                  "Invite",
-                  style: TextStyle(color: Colors.green),
+                    // TODO: Implement actual invite logic
+                  },
+                  child: const Text(
+                    "Invite",
+                    style: TextStyle(color: Colors.green),
+                  ),
+                                ),
+                              ),
                 ),
-              ),
-            ),
           ),
         ],
       ),
+     floatingActionButton: Padding(
+       padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 2),
+       child: FloatingActionButton(
+         shape: CircleBorder(),
+         onPressed: (){},
+         child: Icon(Icons.add,color: Colors.white,),
+         backgroundColor: Color(0xFF7CD187),
+       ),
+     ),
      //
     );
   }
