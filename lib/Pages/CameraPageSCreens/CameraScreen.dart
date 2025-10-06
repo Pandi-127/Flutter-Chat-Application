@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:chat_app/Pages/CameraPageSCreens/showPicture.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -15,6 +16,8 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   late CameraController _cameraController;
  late Future<void> cameraValue;
+ late String lastPhotoPath;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -41,18 +44,23 @@ class _CameraScreenState extends State<CameraScreen> {
               child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 75,vertical: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 10),
                       child: Row(
-
                                       children: [
+                                        IconButton(
+                                          onPressed: ()
+                                            {
+                                            Navigator.push(context, MaterialPageRoute(builder: (build)=>ShowPicture(imagepath: lastPhotoPath)));
+                                            },
+                                            icon: Icon(Icons.insert_photo_outlined,color: Colors.white,), ),
+                                        SizedBox(width: 10,),
                                         IconButton(onPressed: (){}, icon:Icon(Icons.flash_off,color: Colors.white,) ),
-                                        SizedBox(width: 30,),
+                                        SizedBox(width: 10,),
                                         IconButton(onPressed: (){
                                           takePhoto();
                                         }, icon:Icon(Icons.panorama_fish_eye,size: 80,color: Colors.white,) ),
-                                        SizedBox(width: 30,),
+                                        SizedBox(width: 10,),
                                         IconButton(onPressed: (){}, icon:Icon(Icons.flip_camera_ios_outlined,color: Colors.white,) ),
-
                                       ],
                                     ),
                     )]),
@@ -63,8 +71,11 @@ class _CameraScreenState extends State<CameraScreen> {
   }
   void takePhoto() async {
     try {
-      final XFile file = await _cameraController.takePicture();
-      print("Photo saved at: ${file.path}");
+      final XFile image = await _cameraController.takePicture();
+      final directory =  await getApplicationDocumentsDirectory();
+      final String filePath = '${directory.path}/${DateTime.now()}.jpg';
+      lastPhotoPath =filePath;
+      await image.saveTo(filePath);
     } catch (e) {
       print("Error while taking picture: $e");
     }
