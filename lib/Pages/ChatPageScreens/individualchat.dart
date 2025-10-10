@@ -1,6 +1,8 @@
 import 'package:chat_app/Datas/ProfileDataModel.dart';
 import 'package:chat_app/Pages/CameraPage.dart';
 import 'package:chat_app/Pages/CameraPageSCreens/CameraScreen.dart';
+import 'package:chat_app/Pages/ChatPageScreens/TextCards/ownText.dart';
+import 'package:chat_app/Pages/ChatPageScreens/TextCards/replayText.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -101,7 +103,7 @@ class _IndividualChatState extends State<IndividualChat> {
         backgroundColor: Color(0xFF049347),
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height-100,
         width: MediaQuery.of(context).size.width,
         child: WillPopScope(
           onWillPop: () {
@@ -116,7 +118,13 @@ class _IndividualChatState extends State<IndividualChat> {
           },
           child: Stack(
             children: [
-              ListView(),
+              ListView(
+                children: [
+                  ownText(),
+                ReplayText(),ownText(),
+                ReplayText(),
+                ],
+              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Column(
