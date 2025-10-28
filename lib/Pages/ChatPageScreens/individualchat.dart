@@ -5,6 +5,7 @@ import 'package:chat_app/Pages/ChatPageScreens/TextCards/ownText.dart';
 import 'package:chat_app/Pages/ChatPageScreens/TextCards/replayText.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:socket_io_client/socket_io_client.dart'as io;
 
 class IndividualChat extends StatefulWidget {
   final ProfileDataModel chats;
@@ -19,6 +20,8 @@ class _IndividualChatState extends State<IndividualChat> {
   TextEditingController myController = TextEditingController();
   bool clickedEmojiIcon = false;
   FocusNode myFocusNode = FocusNode();
+  late io.Socket socket;
+
 
   @override
   void initState() {
@@ -30,6 +33,9 @@ class _IndividualChatState extends State<IndividualChat> {
         });
       }
     });
+  }
+  void connect (){
+    socket = io.io("http://192.168.64.213:5000 ");
   }
 
   @override
